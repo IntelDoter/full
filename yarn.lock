@@ -1822,6 +1822,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"backend@workspace:packages/backend":
+  version: 0.0.0-use.local
+  resolution: "backend@workspace:packages/backend"
+  dependencies:
+    "@fastify/cors": "npm:^9.0.1"
+    "@stylistic/eslint-plugin-ts": "npm:^3.1.0"
+    eslint-config-eslint: "npm:^11.0.0"
+    fastify: "npm:^4.28.1"
+    lowdb: "npm:^7.0.1"
+    todolist-typings: "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
@@ -6144,19 +6157,6 @@ __metadata:
   checksum: 10c0/528fff6f5e12d0c5a391229ad893910709bc51b5705962b09404a1d813857578149b8815f35d3ee5752f44cd378d0f31669d4b1d7e2d11f41e08283d5134bd1f
   languageName: node
   linkType: hard
-
-"server@workspace:packages/server":
-  version: 0.0.0-use.local
-  resolution: "server@workspace:packages/server"
-  dependencies:
-    "@fastify/cors": "npm:^9.0.1"
-    "@stylistic/eslint-plugin-ts": "npm:^3.1.0"
-    eslint-config-eslint: "npm:^11.0.0"
-    fastify: "npm:^4.28.1"
-    lowdb: "npm:^7.0.1"
-    todolist-typings: "workspace:*"
-  languageName: unknown
-  linkType: soft
 
 "set-cookie-parser@npm:^2.4.1":
   version: 2.7.1
