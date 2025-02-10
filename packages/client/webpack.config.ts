@@ -8,7 +8,8 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 const config: webpack.Configuration = {
   entry: path.resolve(import.meta.dirname, './src/index.tsx'),
   output: {
-    path: path.resolve(import.meta.dirname, './dist')
+    path: path.resolve(import.meta.dirname, './dist'),
+    publicPath: process.env.PUBLIC_PATH ?? ''
   },
   mode: IS_DEV ? 'development' : 'production',
   devtool: IS_DEV ? false : 'hidden-source-map',

@@ -4,7 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "NODE_ENV=development NODE_OPTIONS='--experimental-strip-types' nodemon index.ts"
+    "start": "NODE_ENV=development NODE_OPTIONS='--experimental-strip-types' nodemon ./src/index.ts",
+    "test:eslint": "npx eslint src/*"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,8 @@
     "lowdb": "^7.0.1"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin-ts": "^3.1.0",
+    "eslint-config-eslint": "^11.0.0",
     "todolist-typings": "workspace:*"
   }
 }
