@@ -31,6 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: dependencies
     env:
+      API_URL: https://kholstinevich.ru
       PUBLIC_PATH: https://storage.yandexcloud.net/kholstinevich-static/v1/static/
     steps:
       - uses: actions/checkout@v4
