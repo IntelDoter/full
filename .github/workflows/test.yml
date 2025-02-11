@@ -141,7 +141,7 @@ jobs:
           SOURCE: "docker-compose.yml .env"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          REMOTE_TARGET: ${{ secrets.REMOTE_TARGET }}
+          TARGET: ${{ secrets.REMOTE_TARGET }}
           SCRIPT_BEFORE: |
             echo ${{secrets.DOCKER_OAUTH_TOKEN}}|docker login \
             --username oauth \
