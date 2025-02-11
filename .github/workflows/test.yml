@@ -124,9 +124,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
+      - uses: actions/checkout@v4
       - name: generate .env
         run: |
-          echo "CR_REGISTRY=${CR_REGISTRY}\nIMAGE_TAG=${IMAGE_TAG}\nHTML_PATH=${S3_ENDPOINT}/${S3_PATH}/${GITHUB_SHA::8}/index.html" >> .env
+          echo "CR_REGISTRY=${CR_REGISTRY}" > .env
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> .env
+          echo "HTML_PATH=${S3_ENDPOINT}/${S3_PATH}/${GITHUB_SHA::8}/index.html" >> .env
       - name:
         run: cat .env
       - name: Deploy to Staging server
