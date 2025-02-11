@@ -9,7 +9,8 @@ const config: webpack.Configuration = {
   entry: path.resolve(import.meta.dirname, './src/index.tsx'),
   output: {
     path: path.resolve(import.meta.dirname, './dist'),
-    publicPath: process.env.PUBLIC_PATH ?? ''
+    publicPath: process.env.PUBLIC_PATH ?? '',
+    filename: '[name].[contenthash].js'
   },
   mode: IS_DEV ? 'development' : 'production',
   devtool: IS_DEV ? false : 'hidden-source-map',
