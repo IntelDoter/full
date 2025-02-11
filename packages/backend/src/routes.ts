@@ -20,7 +20,7 @@ export function initRoutes(fastify: FastifyInstance) {
       db.data.todos.push(todoItem);
 
       await db.write();
-    },
+    }
   );
 
   fastify.get<{
@@ -56,6 +56,6 @@ export function initRoutes(fastify: FastifyInstance) {
       db.data.todos = db.data.todos.filter((item) => item.id !== idForDelete);
 
       await db.write();
-    },
+    }
   );
 }

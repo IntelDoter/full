@@ -26,7 +26,7 @@ export function Content() {
     const { id } = item;
 
     fetch(`${BASE_API_URL}/api/v1/check/${id}`, {
-      method: "get",
+      method: "get"
     }).then(() => {
       const newItems = [...items],
         changedItem = newItems.filter((item) => item.id === id)[0];
@@ -45,7 +45,7 @@ export function Content() {
 
     fetch(`${BASE_API_URL}/api/v1/add`, {
       method: "post",
-      body: JSON.stringify(dataItem),
+      body: JSON.stringify(dataItem)
     }).then(() => {
       setItems([...items, dataItem]);
       form.setFieldValue("todo", "");
@@ -55,7 +55,7 @@ export function Content() {
   const onDelete = (item: TodoItem) => {
     fetch(`${BASE_API_URL}/api/v1/delete`, {
       method: "post",
-      body: JSON.stringify(item),
+      body: JSON.stringify(item)
     });
 
     const idForDelete = item.id;

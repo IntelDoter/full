@@ -4,11 +4,11 @@ import cors from "@fastify/cors";
 import { initRoutes } from "./routes.ts";
 
 const fastify = Fastify({
-  logger: true,
+  logger: true
 });
 
 await fastify.register(cors, {
-  origin: "*",
+  origin: "*"
 });
 
 initRoutes(fastify);
