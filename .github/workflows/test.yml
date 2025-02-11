@@ -79,6 +79,9 @@ jobs:
         with:
           name: dist
 
+      - name: ls
+        run: ls
+
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --exclude '*.html'
