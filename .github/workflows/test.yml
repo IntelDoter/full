@@ -104,7 +104,6 @@ jobs:
     env:
       CR_REGISTRY: crp4ha0gophhmdbcg4ss
       IMAGE_TAG: ${{ github.sha }}
-      HTML_PATH: ''
     steps:
       - uses: actions/checkout@v4
       - name: Login to Yandex Cloud
@@ -114,8 +113,7 @@ jobs:
           --password-stdin \
           cr.yandex
       - name: export
-        run: |
-          echo "HTML_PATH=${S3_ENDPOINT}/${S3_PATH}/${GITHUB_SHA::8}/index.html" >> $HTML_PATH
+        run: export HTML_PATH=${S3_ENDPOINT}/${S3_PATH}/${GITHUB_SHA::8}/index.html
       - name: echo
         run: echo $CR_REGISTRY
       - name: echo2
