@@ -115,11 +115,11 @@ jobs:
           cr.yandex
       - name: echo
         run: echo $HTML_PATH
-      - name: Build, tag, and push image to Yandex Cloud Container Registry
-        run: |
-          docker build -t cr.yandex/$CR_REGISTRY/backend:$IMAGE_TAG -f Dockerfile.backend .
-          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
-      - name: Build, tag, and push image to Yandex Cloud Container Registry
-        run: |
-          docker build -t cr.yandex/$CR_REGISTRY/nginx:$IMAGE_TAG -f Dockerfile.nginx .
-          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+      - name: Build backend
+        run: docker build -t cr.yandex/$CR_REGISTRY/backend:$IMAGE_TAG -f Dockerfile.backend .
+      - name: Publish backend
+        run: docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+      - name: Build nginx
+        run: docker build -t cr.yandex/$CR_REGISTRY/nginx:$IMAGE_TAG -f Dockerfile.nginx .
+      - name: Publish nginx
+        run: docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
