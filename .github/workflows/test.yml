@@ -104,6 +104,7 @@ jobs:
     env:
       CR_REGISTRY: crp4ha0gophhmdbcg4ss
       IMAGE_TAG: ${{ github.sha }}
+      HTML_PATH: ''
     steps:
       - uses: actions/checkout@v4
       - name: Login to Yandex Cloud
