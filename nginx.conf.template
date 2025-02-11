@@ -25,6 +25,6 @@ server {
   }
 
   location / {
-     proxy_pass https://storage.yandexcloud.net/kholstinevich-static/v1/static/${BUILD_ID}/index.html;
+     proxy_pass ${HTML_PATH};
   }
 }

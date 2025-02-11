@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [master]
 
+env:
+  S3_ENDPOINT: 'https://storage.yandexcloud.net'
+  S3_PATH: 'v1/static'
+
 jobs:
   dependencies:
     runs-on: ubuntu-latest
@@ -33,13 +37,10 @@ jobs:
         with:
           cache: "yarn"
           node-version: 22
-
       - name: Install dependencies
         run: yarn
-
       - name: Build
         run: yarn run build
-
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -56,16 +57,12 @@ jobs:
         with:
           cache: "yarn"
           node-version: 22
-
       - name: Install dependencies
         run: yarn
-
       - name: eslint
         run: yarn run eslint
-
       - name: eslint
         run: yarn run stylelint
-
       - name: eslint
         run: yarn run prettier
 
@@ -78,10 +75,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-
       - name: test
         run: echo ${GITHUB_SHA::8}
-
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --exclude '*.html'
@@ -89,10 +84,9 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_S3_ENDPOINT: 'https://storage.yandexcloud.net'
-          DEST_DIR: 'v1/static'
+          AWS_S3_ENDPOINT: ${{ S3_ENDPOINT }}
+          DEST_DIR: ${{ S3_PATH }}
           AWS_REGION: 'ru-central1'
-
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --exclude '*' --include '*.html'
@@ -101,5 +95,31 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_S3_ENDPOINT: 'https://storage.yandexcloud.net'
-          DEST_DIR: 'v1/static/${GITHUB_SHA::8}'
+          DEST_DIR: 'v1/static/${{ GITHUB_SHA::8 }}'
           AWS_REGION: 'ru-central1'
+
+  docker:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      CR_REGISTRY: crp4ha0gophhmdbcg4ss
+      HTML_PATH: '${{ S3_ENDPOINT }}/${{ S3_PATH }}/${{GITHUB_SHA::8}}/index.html'
+      IMAGE_TAG: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to Yandex Cloud
+        run: |
+          echo $DOCKER_OAUTH_TOKEN|docker login \
+          --username oauth \
+          --password-stdin \
+          cr.yandex
+      - name: echo
+        run: echo $HTML_PATH
+      - name: Build, tag, and push image to Yandex Cloud Container Registry
+        run: |
+          docker build -t cr.yandex/$CR_REGISTRY/backend:$IMAGE_TAG -f Dockerfile.backend .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+      - name: Build, tag, and push image to Yandex Cloud Container Registry
+        run: |
+          docker build -t cr.yandex/$CR_REGISTRY/nginx:$IMAGE_TAG -f Dockerfile.nginx .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
