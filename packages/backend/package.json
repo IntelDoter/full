@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "start": "NODE_ENV=development NODE_OPTIONS='--experimental-strip-types' nodemon ./src/index.ts",
-    "test:eslint": "npx eslint src/*"
+    "jest": "npx jest",
+    "prettier": "npx prettier ./src --check",
+    "prettier:fix": "npx prettier ./src -w",
+    "eslint": "npx eslint src/*"
   },
   "keywords": [],
   "author": "",

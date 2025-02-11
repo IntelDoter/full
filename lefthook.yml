@@ -1,0 +1,23 @@
+pre-commit:
+  parallel: true
+  commands:
+    stylelint:
+      root: "packages/client/"
+      glob: "*.css"
+      run: npx stylelint {staged_files}
+    eslint-backend:
+      root: "packages/backend/"
+      glob: "*.ts"
+      run: npx eslint {staged_files}
+    eslint-client:
+      root: "packages/client/"
+      glob: "*.ts?"
+      run: npx eslint {staged_files}
+    prettier-client:
+      root: "packages/client/"
+      glob: "*.ts?"
+      run: npx prettier {staged_files} --check
+    prettier-backend:
+      root: "packages/backend/"
+      glob: "*.ts"
+      run: npx prettier {staged_files} --check
