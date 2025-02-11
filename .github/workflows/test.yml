@@ -84,8 +84,8 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_S3_ENDPOINT: ${{ S3_ENDPOINT }}
-          DEST_DIR: ${{ S3_PATH }}
+          AWS_S3_ENDPOINT: ${{ env.S3_ENDPOINT }}
+          DEST_DIR: ${{ env.S3_PATH }}
           AWS_REGION: 'ru-central1'
       - uses: jakejarvis/s3-sync-action@master
         with:
@@ -94,8 +94,8 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_S3_ENDPOINT: 'https://storage.yandexcloud.net'
-          DEST_DIR: 'v1/static/${{ GITHUB_SHA::8 }}'
+          AWS_S3_ENDPOINT: ${{ env.S3_ENDPOINT }}
+          DEST_DIR: '${{ env.S3_PATH }}/${{ GITHUB_SHA::8 }}'
           AWS_REGION: 'ru-central1'
 
   docker:
@@ -103,7 +103,7 @@ jobs:
     environment: production
     env:
       CR_REGISTRY: crp4ha0gophhmdbcg4ss
-      HTML_PATH: '${{ S3_ENDPOINT }}/${{ S3_PATH }}/${{GITHUB_SHA::8}}/index.html'
+      HTML_PATH: '${{ env.S3_ENDPOINT }}/${{ env.S3_PATH }}/${{ GITHUB_SHA::8 }}/index.html'
       IMAGE_TAG: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
