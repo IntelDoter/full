@@ -123,6 +123,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
+    needs: [upload, docker]
     steps:
       - uses: actions/checkout@v4
       - name: generate .env
@@ -140,6 +141,7 @@ jobs:
           SOURCE: "docker-compose.yml .env"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_TARGET: ${{ secrets.REMOTE_TARGET }}
           SCRIPT_BEFORE: |
             echo ${{secrets.DOCKER_OAUTH_TOKEN}}|docker login \
             --username oauth \
