@@ -149,5 +149,5 @@ jobs:
             --password-stdin \
             cr.yandex
           SCRIPT_AFTER: |
-            echo $(pwd)
+            cd /tmp/deploy
             sudo docker compose up -d
