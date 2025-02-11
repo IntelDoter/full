@@ -5,8 +5,7 @@ services:
     container_name: nginx
     environment:
       HTML_PATH: $HTML_PATH
-    build:
-      dockerfile: Dockerfile.nginx
+    image: cr.yandex/$CR_REGISTRY/nginx:$IMAGE_TAG
     networks:
       nginx_net:
     volumes:
@@ -18,8 +17,7 @@ services:
     container_name: backend
     networks:
       nginx_net:
-    build:
-      dockerfile: Dockerfile.backend
+    image: cr.yandex/$CR_REGISTRY/backend:$IMAGE_TAG
 
 networks:
   nginx_net:

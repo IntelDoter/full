@@ -10,6 +10,8 @@ on:
 env:
   S3_ENDPOINT: 'https://storage.yandexcloud.net'
   S3_PATH: 'v1/static'
+  CR_REGISTRY: crp4ha0gophhmdbcg4ss
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   dependencies:
@@ -101,9 +103,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     environment: production
-    env:
-      CR_REGISTRY: crp4ha0gophhmdbcg4ss
-      IMAGE_TAG: ${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
       - name: Login to Yandex Cloud
@@ -120,3 +119,28 @@ jobs:
         run: docker build -t cr.yandex/$CR_REGISTRY/nginx:$IMAGE_TAG -f Dockerfile.nginx .
       - name: Publish nginx
         run: docker push cr.yandex/$CR_REGISTRY/nginx:$IMAGE_TAG
+  
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: generate .env
+        run: |
+          echo "CR_REGISTRY=${CR_REGISTRY}\nIMAGE_TAG=${IMAGE_TAG}\nHTML_PATH=${S3_ENDPOINT}/${S3_PATH}/${GITHUB_SHA::8}/index.html" >> .env
+      - name:
+        run: cat .env
+      - name: Deploy to Staging server
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rlgoDzvc -i"
+          SOURCE: "docker-compose.yml .env"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          SCRIPT_BEFORE: |
+            echo ${{secrets.DOCKER_OAUTH_TOKEN}}|docker login \
+            --username oauth \
+            --password-stdin \
+            cr.yandex
+          SCRIPT_AFTER: |
+            docker compose up -d
