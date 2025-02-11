@@ -92,4 +92,3 @@ jobs:
           AWS_S3_ENDPOINT: 'https://storage.yandexcloud.net'
           DEST_DIR: 'v1/static'
           AWS_REGION: 'ru-central1'
-          SOURCE_DIR: 'dist'
