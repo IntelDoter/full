@@ -79,6 +79,9 @@ jobs:
         with:
           name: dist
 
+      - name: test
+        run: echo ${GITHUB_SHA::8}
+
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --exclude '*.html'
@@ -98,5 +101,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_S3_ENDPOINT: 'https://storage.yandexcloud.net'
-          DEST_DIR: 'v1/static'
+          DEST_DIR: 'v1/static/${GITHUB_SHA::8}'
           AWS_REGION: 'ru-central1'
