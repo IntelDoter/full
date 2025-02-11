@@ -113,7 +113,7 @@ jobs:
           --password-stdin \
           cr.yandex
       - name: export
-        run: HTML_PATH="${S3_ENDPOINT}/${S3_PATH}/${GITHUB_SHA::8}/index.html"
+        run: echo "HTML_PATH=${S3_ENDPOINT}/${S3_PATH}/${GITHUB_SHA::8}/index.html" >> $HTML_PATH
       - name: echo
         run: echo $CR_REGISTRY
       - name: echo2
