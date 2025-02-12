@@ -1,1 +1,1 @@
-declare var BASE_API_URL: string;
+declare const BASE_API_URL: string;

@@ -1,10 +1,10 @@
 import { JSONFilePreset } from "lowdb/node";
 import type { FastifyInstance } from "fastify";
-import { getDbPath } from "./utils.ts";
 
 import type { TodoItem } from "todolist-typings";
 
-const dbPath = getDbPath(process.env.NODE_ENV);
+const dbPath =
+  process.env.NODE_ENV === "development" ? "db.json" : "/tmp/data/db.json";
 const db = await JSONFilePreset<{ todos: TodoItem[] }>(dbPath, { todos: [] });
 
 export function initRoutes(fastify: FastifyInstance) {

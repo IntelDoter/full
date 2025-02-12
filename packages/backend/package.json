@@ -5,10 +5,9 @@
   "type": "module",
   "scripts": {
     "start": "NODE_ENV=development NODE_OPTIONS='--experimental-strip-types' nodemon ./src/index.ts",
-    "jest": "npx jest",
-    "prettier": "npx prettier ./src --check",
-    "prettier:fix": "npx prettier ./src -w",
-    "eslint": "npx eslint src/*"
+    "eslint": "npx eslint .",
+    "prettier": "prettier . --check",
+    "prettier:fix": "npx prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -21,7 +20,11 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin-ts": "^3.1.0",
+    "@types/jest": "^29.5.14",
     "eslint-config-eslint": "^11.0.0",
-    "todolist-typings": "workspace:*"
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "todolist-typings": "workspace:*",
+    "ts-jest": "^29.2.5"
   }
 }

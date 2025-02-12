@@ -9,20 +9,18 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn workspace client build",
+    "build": "yarn workspace todolist run build",
     "eslint": "yarn workspaces foreach --all -pt run eslint",
     "stylelint": "yarn workspaces foreach --all -pt run stylelint",
-    "prettier": "yarn workspaces foreach --all -pt run prettier"
+    "prettier": "yarn workspaces foreach --all -pt run prettier",
+    "jest": "yarn workspace backend run jest",
+    "playwright": "yarn workspace todolist run playwright"
   },
   "devDependencies": {
-    "@eslint/js": "^9.20.0",
-    "@types/jest": "^29.5.14",
     "eslint": "^9.20.0",
-    "jest": "^29.7.0",
     "jiti": "^2.4.2",
     "lefthook": "^1.10.10",
     "prettier": "^3.5.0",
-    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
